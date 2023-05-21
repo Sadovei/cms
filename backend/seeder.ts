@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import colors from 'colors';
 import users from './data/users.js';
 import products from './data/products.js';
@@ -30,8 +29,8 @@ const importData = async () => {
 
         console.log(colors.green.inverse('Data Imported!'));
         process.exit();
-    } catch (error: any) {
-        console.error(colors.red.inverse(`${error}`));
+    } catch (error: unknown) {
+        console.error(colors.red(`${error}`));
         process.exit(1);
     }
 };
@@ -42,10 +41,10 @@ const destroyData = async () => {
         await Product.deleteMany();
         await User.deleteMany();
 
-        console.log(colors.green.inverse('Data Destroyed!'));
+        console.log(colors.red.inverse('Data Destroyed!'));
         process.exit();
-    } catch (error) {
-        console.error(colors.red.inverse(`${error}`));
+    } catch (error: unknown) {
+        console.error(colors.red(`${error}`));
         process.exit(1);
     }
 };
