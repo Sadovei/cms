@@ -12,15 +12,14 @@ export const errorHandler = (err: CastError, req: Request, res: Response) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     let message = err.message;
 
-    // If the status code is 500, set the message to "Resource not found"
+    // If Mongoose not found error, set to 404 and change message
     if (err.name === 'CastError' && err.kind === 'ObjectId') {
+        statusCode = 404;
         message = 'Resource not found';
-        statusCode = 400;
     }
 
-    res.status(statusCode);
     res.status(statusCode).json({
         message,
-        stack: process.env.NODE_ENV === 'production' ? "Love" : err.stack
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack
     });
 }
